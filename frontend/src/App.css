@@ -1,0 +1,383 @@
+/* Renewable Energy Dashboard Styles */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  background: #0f0f0f;
+  color: #e0e0e0;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid #333;
+}
+
+.header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.header .subtitle {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+/* Main Layout */
+.main-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 280px;
+  background: #1a1a1a;
+  border-right: 1px solid #333;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+/* Filter Panel */
+.filter-panel {
+  background: #252525;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.filter-panel h3 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.filter-group {
+  margin-bottom: 1rem;
+}
+
+.filter-group label {
+  display: block;
+  font-size: 0.85rem;
+  color: #aaa;
+  margin-bottom: 0.5rem;
+}
+
+.filter-group select,
+.filter-group input[type="text"] {
+  width: 100%;
+  padding: 0.5rem;
+  background: #333;
+  border: 1px solid #444;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.filter-group select:focus,
+.filter-group input[type="text"]:focus {
+  outline: none;
+  border-color: #00A8E8;
+}
+
+.filter-group input[type="range"] {
+  width: 100%;
+  accent-color: #00A8E8;
+}
+
+.range-value {
+  display: block;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #00A8E8;
+  margin-top: 0.25rem;
+}
+
+.filter-tip {
+  background: #2a2a2a;
+  padding: 0.75rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 1rem;
+}
+
+.filter-tip strong {
+  color: #FFB800;
+}
+
+/* Stats Card */
+.stats-card {
+  background: #252525;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.stats-card h3 {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  color: #fff;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+  font-size: 0.85rem;
+  border-bottom: 1px solid #333;
+}
+
+.stat-row:last-child {
+  border-bottom: none;
+}
+
+.stat-value {
+  font-weight: 600;
+  color: #fff;
+}
+
+.stat-value.solar {
+  color: #FFB800;
+}
+
+.stat-value.wind {
+  color: #00A8E8;
+}
+
+/* Polygon Stats */
+.polygon-stats {
+  background: linear-gradient(135deg, #1a2a3a 0%, #1a3a2a 100%);
+  border: 1px solid #3388ff;
+  position: relative;
+}
+
+.polygon-stats .clear-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  background: #ff4444;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.polygon-stats .clear-btn:hover {
+  background: #ff6666;
+}
+
+/* Map Container */
+.map-container {
+  flex: 1;
+  position: relative;
+  background: #1a1a1a;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 1.2rem;
+  color: #888;
+}
+
+/* Leaflet Customizations */
+.leaflet-container {
+  background: #1a1a1a;
+}
+
+.popup-content {
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.popup-content strong {
+  font-size: 1rem;
+}
+
+/* Right Panel */
+.right-panel {
+  width: 320px;
+  background: #1a1a1a;
+  border-left: 1px solid #333;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+/* Analytics */
+.analytics {
+  margin-bottom: 1rem;
+}
+
+.chart-section {
+  background: #252525;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.chart-section h3 {
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+  color: #fff;
+}
+
+.chart-section.polygon-chart {
+  background: linear-gradient(135deg, #1a2a3a 0%, #1a3a2a 100%);
+  border: 1px solid #3388ff;
+}
+
+/* Generator Detail */
+.generator-detail {
+  background: #252525;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid #00A8E8;
+}
+
+.generator-detail h3 {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: #888;
+}
+
+.generator-detail .generator-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.75rem;
+}
+
+.detail-row {
+  font-size: 0.85rem;
+  padding: 0.3rem 0;
+  color: #ccc;
+}
+
+.detail-row span {
+  color: #888;
+}
+
+/* Generator List */
+.generator-list {
+  background: #252525;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.generator-list h3 {
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+  color: #fff;
+}
+
+.list-container {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.generator-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.generator-item:hover {
+  background: #333;
+}
+
+.generator-item.selected {
+  background: #2a3a4a;
+  border-left: 3px solid #00A8E8;
+}
+
+.generator-icon {
+  font-size: 1.2rem;
+}
+
+.generator-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.generator-item-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.generator-meta {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .right-panel {
+    width: 280px;
+  }
+}
+
+@media (max-width: 900px) {
+  .main-content {
+    flex-direction: column;
+  }
+
+  .sidebar,
+  .right-panel {
+    width: 100%;
+    max-height: 200px;
+  }
+
+  .map-container {
+    min-height: 400px;
+  }
+}
