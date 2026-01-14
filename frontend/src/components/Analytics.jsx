@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
-  PieChart, Pie, Cell, ResponsiveContainer
+  PieChart, Pie, Cell, ResponsiveContainer, LineChart, Line
 } from 'recharts';
 
 const COLORS = {
@@ -11,15 +11,26 @@ const COLORS = {
   total: '#8884d8',
 };
 
-function Analytics({ realtimeData, generators, polygonAnalytics }) {
+function Analytics({ realtimeData, generators, polygonGenerators = [] }) {
   // Prepare data for charts
   const generationData = useMemo(() => {
     return realtimeData.map(r => ({
       name: r.region,
+      fullName: r.region_name,
       solar: Math.max(0, r.solar_mwh),
       wind: Math.max(0, r.wind_mwh),
+      total: Math.max(0, r.total_mwh),
     }));
   }, [realtimeData]);
+
+  // Total real-time generation
+  const totalRealtime = useMemo(() => {
+    return {
+      solar: generationData.reduce((sum, r) => sum + r.solar, 0),
+      wind: generationData.reduce((sum, r) => sum + r.wind, 0),
+      total: generationData.reduce((sum, r) => sum + r.total, 0),
+    };
+  }, [generationData]);
 
   // Capacity by source
   const capacityBySource = useMemo(() => {
@@ -40,7 +51,7 @@ function Analytics({ realtimeData, generators, polygonAnalytics }) {
     ].filter(d => d.value > 0);
   }, [generators]);
 
-  // Capacity by state (top 10)
+  // Capacity by state (top 8)
   const capacityByState = useMemo(() => {
     const stateMap = {};
     generators.forEach(g => {
@@ -67,17 +78,41 @@ function Analytics({ realtimeData, generators, polygonAnalytics }) {
 
   // Polygon-specific data
   const polygonCapacity = useMemo(() => {
-    if (!polygonAnalytics) return null;
+    if (!polygonGenerators.length) return null;
+    const solar = polygonGenerators
+      .filter(g => g.energy_source === 'SUN')
+      .reduce((sum, g) => sum + g.capacity_mw, 0);
+    const wind = polygonGenerators
+      .filter(g => g.energy_source === 'WND')
+      .reduce((sum, g) => sum + g.capacity_mw, 0);
+
     return [
-      { name: 'Solar', value: polygonAnalytics.solar_capacity_mw, color: COLORS.solar },
-      { name: 'Wind', value: polygonAnalytics.wind_capacity_mw, color: COLORS.wind },
+      { name: 'Solar', value: solar, color: COLORS.solar },
+      { name: 'Wind', value: wind, color: COLORS.wind },
     ].filter(d => d.value > 0);
-  }, [polygonAnalytics]);
+  }, [polygonGenerators]);
 
   return (
     <div className="analytics">
+      {/* Real-time totals */}
+      <div className="realtime-totals">
+        <h3>Live Generation (All Regions)</h3>
+        <div className="realtime-stat">
+          <span className="realtime-label">Solar:</span>
+          <span className="realtime-value solar">{totalRealtime.solar.toLocaleString()} MWh</span>
+        </div>
+        <div className="realtime-stat">
+          <span className="realtime-label">Wind:</span>
+          <span className="realtime-value wind">{totalRealtime.wind.toLocaleString()} MWh</span>
+        </div>
+        <div className="realtime-stat total">
+          <span className="realtime-label">Total:</span>
+          <span className="realtime-value">{totalRealtime.total.toLocaleString()} MWh</span>
+        </div>
+      </div>
+
       <div className="chart-section">
-        <h3>Real-time Generation (MWh)</h3>
+        <h3>Generation by Region (MWh)</h3>
         <ResponsiveContainer width="100%" height={200}>
           <BarChart data={generationData} margin={{ top: 5, right: 5, left: -20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#444" />
@@ -86,6 +121,10 @@ function Analytics({ realtimeData, generators, polygonAnalytics }) {
             <Tooltip
               contentStyle={{ backgroundColor: '#1e1e1e', border: '1px solid #444' }}
               formatter={(value) => value.toLocaleString() + ' MWh'}
+              labelFormatter={(label) => {
+                const item = generationData.find(d => d.name === label);
+                return item?.fullName || label;
+              }}
             />
             <Legend />
             <Bar dataKey="solar" name="Solar" fill={COLORS.solar} />
@@ -95,7 +134,7 @@ function Analytics({ realtimeData, generators, polygonAnalytics }) {
       </div>
 
       <div className="chart-section">
-        <h3>Capacity by Source</h3>
+        <h3>Installed Capacity by Source</h3>
         <ResponsiveContainer width="100%" height={180}>
           <PieChart>
             <Pie
@@ -122,7 +161,7 @@ function Analytics({ realtimeData, generators, polygonAnalytics }) {
       </div>
 
       <div className="chart-section">
-        <h3>Capacity by State</h3>
+        <h3>Capacity by State (MW)</h3>
         <ResponsiveContainer width="100%" height={200}>
           <BarChart data={capacityByState} layout="vertical" margin={{ top: 5, right: 5, left: 0, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#444" />
@@ -138,7 +177,7 @@ function Analytics({ realtimeData, generators, polygonAnalytics }) {
         </ResponsiveContainer>
       </div>
 
-      {polygonAnalytics && polygonCapacity && polygonCapacity.length > 0 && (
+      {polygonCapacity && polygonCapacity.length > 0 && (
         <div className="chart-section polygon-chart">
           <h3>Selected Area Capacity</h3>
           <ResponsiveContainer width="100%" height={150}>

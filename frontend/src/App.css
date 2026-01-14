@@ -40,6 +40,45 @@ body {
   font-size: 0.9rem;
 }
 
+.header-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-actions button {
+  background: #00A8E8;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.header-actions button:hover {
+  background: #0090c8;
+}
+
+.header-actions button:disabled {
+  background: #444;
+  cursor: not-allowed;
+}
+
+.auto-refresh {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #888;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.auto-refresh input {
+  accent-color: #00A8E8;
+}
+
 /* Main Layout */
 .main-content {
   display: flex;
@@ -196,11 +235,28 @@ body {
 
 .loading {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100%;
   font-size: 1.2rem;
   color: #888;
+  gap: 1rem;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #333;
+  border-top-color: #00A8E8;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Leaflet Customizations */
@@ -229,6 +285,58 @@ body {
 /* Analytics */
 .analytics {
   margin-bottom: 1rem;
+}
+
+/* Realtime Totals */
+.realtime-totals {
+  background: linear-gradient(135deg, #1a2a1a 0%, #1a1a2a 100%);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #2a4a2a;
+}
+
+.realtime-totals h3 {
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+  color: #4CAF50;
+}
+
+.realtime-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0;
+  font-size: 0.85rem;
+  border-bottom: 1px solid #333;
+}
+
+.realtime-stat:last-child {
+  border-bottom: none;
+}
+
+.realtime-stat.total {
+  margin-top: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #444;
+  font-weight: 600;
+}
+
+.realtime-label {
+  color: #aaa;
+}
+
+.realtime-value {
+  font-weight: 600;
+  color: #fff;
+}
+
+.realtime-value.solar {
+  color: #FFB800;
+}
+
+.realtime-value.wind {
+  color: #00A8E8;
 }
 
 .chart-section {

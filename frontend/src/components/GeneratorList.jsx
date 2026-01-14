@@ -1,4 +1,4 @@
-function GeneratorList({ generators, onSelect, selectedId }) {
+function GeneratorList({ generators, onSelect, selectedId, title = 'Top Generators' }) {
   const getSourceIcon = (source) => {
     switch (source) {
       case 'SUN': return '☀️';
@@ -19,7 +19,7 @@ function GeneratorList({ generators, onSelect, selectedId }) {
 
   return (
     <div className="generator-list">
-      <h3>Top Generators ({generators.length})</h3>
+      <h3>{title} ({generators.length})</h3>
       <div className="list-container">
         {generators.map((gen) => (
           <div
